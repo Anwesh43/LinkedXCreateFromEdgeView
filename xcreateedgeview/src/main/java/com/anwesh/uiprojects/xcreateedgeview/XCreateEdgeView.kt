@@ -37,6 +37,7 @@ fun Canvas.drawXCreateEdge(i : Int, sc1 : Float, sc2 : Float, w  : Float, size :
     val sc1i : Float = sc1.divideScale(i, parts)
     val sc2i : Float = sc2.divideScale(i, parts)
     save()
+    scale(1f - 2 * i, 1f)
     for (j in 0..(lines - 1)) {
         save()
         translate(w * (1 - sc1i), 0f)
@@ -57,9 +58,12 @@ fun Canvas.drawXCENode(i : Int, scale : Float, paint : Paint) {
     paint.color = foreColor
     paint.strokeWidth = Math.min(w, h) / strokeFactor
     paint.strokeCap = Paint.Cap.ROUND
+    save()
+    translate(w / 2, gap * (i + 1))
     for (j in 0..(parts - 1)) {
         drawXCreateEdge(j, sc1, sc2, w / 2, size, paint)
     }
+    restore()
 }
 
 class XCreateEdgeView(ctx : Context) : View(ctx) {
@@ -83,7 +87,7 @@ class XCreateEdgeView(ctx : Context) : View(ctx) {
     data class State(var scale : Float = 0f, var dir : Float = 0f, var prevScale : Float = 0f) {
 
         fun update(cb : (Float) -> Unit) {
-            scale += scale.updateValue(dir, lines, 1)
+            scale += scale.updateValue(dir, parts, parts * lines)
             if (Math.abs(scale - prevScale) > 1) {
                 scale = prevScale + dir
                 dir = 0f
@@ -223,7 +227,7 @@ class XCreateEdgeView(ctx : Context) : View(ctx) {
         fun create(activity : Activity) : XCreateEdgeView {
             val view : XCreateEdgeView = XCreateEdgeView(activity)
             activity.setContentView(view)
-            return view 
+            return view
         }
     }
 }
