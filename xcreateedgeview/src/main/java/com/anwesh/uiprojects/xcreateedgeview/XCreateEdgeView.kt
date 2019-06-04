@@ -61,3 +61,21 @@ fun Canvas.drawXCENode(i : Int, scale : Float, paint : Paint) {
         drawXCreateEdge(j, sc1, sc2, w / 2, size, paint)
     }
 }
+
+class XCreateEdgeView(ctx : Context) : View(ctx) {
+
+    private val paint : Paint = Paint(Paint.ANTI_ALIAS_FLAG)
+
+    override fun onDraw(canvas : Canvas) {
+
+    }
+
+    override fun onTouchEvent(event : MotionEvent) : Boolean {
+        when (event.action) {
+            MotionEvent.ACTION_DOWN -> {
+
+            }
+        }
+        return true
+    }
+} 
