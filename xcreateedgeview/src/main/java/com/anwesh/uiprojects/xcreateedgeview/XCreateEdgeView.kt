@@ -217,4 +217,13 @@ class XCreateEdgeView(ctx : Context) : View(ctx) {
             }
         }
     }
+
+    companion object {
+
+        fun create(activity : Activity) : XCreateEdgeView {
+            val view : XCreateEdgeView = XCreateEdgeView(activity)
+            activity.setContentView(view)
+            return view 
+        }
+    }
 }
