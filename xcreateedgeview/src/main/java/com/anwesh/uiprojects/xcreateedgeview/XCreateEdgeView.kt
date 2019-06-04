@@ -194,4 +194,26 @@ class XCreateEdgeView(ctx : Context) : View(ctx) {
             curr.startUpdating(cb)
         }
     }
+
+    data class Renderer(var view : XCreateEdgeView) {
+
+        private val animator : Animator = Animator(view)
+        private val xce : XCreateEdge = XCreateEdge(0)
+
+        fun render(canvas : Canvas, paint : Paint) {
+            canvas.drawColor(backColor)
+            xce.draw(canvas, paint)
+            animator.animate {
+                xce.update {i, scl ->
+                    animator.stop()
+                }
+            }
+        }
+
+        fun handleTap() {
+            xce.startUpdating {
+                animator.start()
+            }
+        }
+    }
 }
